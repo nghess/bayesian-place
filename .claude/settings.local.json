@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(set PYTHONPATH=D:codebayesian-place)"
+    ]
+  }
+}
