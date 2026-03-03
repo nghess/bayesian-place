@@ -103,7 +103,7 @@ def run_permutations(spike_times_flat, mtrack, occupancy_time,
 
 def make_figure(mouse_id, session_id, cluster,
                 mtrack, spike_positions_df, spike_times_flat,
-                n_permutations=1000, grid_shape=(9, 20),
+                n_permutations=1000, grid_shape=(5, 11),
                 min_occupancy_ms=1000, upsample_factor=100,
                 best_channel=None, n_spikes=None):
     """
@@ -117,8 +117,8 @@ def make_figure(mouse_id, session_id, cluster,
         [1,1] Spike rate map (upsampled)
         [1,2] Null SI distribution
     """
-    FS = 15        # 1.5 × default 10 — body text, labels, ticks, legend
-    SUPTITLE_FS = 26  # 2 × previous suptitle 13
+    FS = 12        # 1.5 × default 10 — body text, labels, ticks, legend
+    SUPTITLE_FS = 20  # 2 × previous suptitle 13
 
     # --- Grid edges ---
     x_edges = np.linspace(mtrack['head_x'].min(), mtrack['head_x'].max(), grid_shape[0] + 1)
@@ -173,12 +173,12 @@ def make_figure(mouse_id, session_id, cluster,
     # -----------------------------------------------------------------------
     # Build figure
     # -----------------------------------------------------------------------
-    title_parts = [f"Mouse {mouse_id}, Session {session_id} - Cl{cluster}"]
+    title_parts = [f"Mouse {mouse_id}, Session {session_id} - cl{cluster}"]
     if best_channel is not None:
-        title_parts.append(f"ch{best_channel}")
+        title_parts.append(f"- ch{best_channel}")
     if n_spikes is not None:
-        title_parts.append(f"{n_spikes} spikes")
-    title_base = "   ".join(title_parts)
+        title_parts.append(f"- {n_spikes} spikes")
+    title_base = " ".join(title_parts)
 
     extent = [x_edges[0], x_edges[-1], y_edges[0], y_edges[-1]]
 
@@ -195,7 +195,7 @@ def make_figure(mouse_id, session_id, cluster,
     ax0.set_aspect('equal', adjustable='box')
     ax0.set_xlabel('Head X', fontsize=FS)
     ax0.set_ylabel('Head Y', fontsize=FS)
-    ax0.set_title('Trajectory & Spike Positions', fontsize=FS)
+    ax0.set_title('Trajectory & Spike Positions', fontsize=FS, pad=12)
     ax0.tick_params(labelsize=FS)
 
     # [0,1] Occupancy histogram
@@ -206,7 +206,7 @@ def make_figure(mouse_id, session_id, cluster,
     )
     ax1.set_xlabel('Head X', fontsize=FS)
     ax1.set_ylabel('Head Y', fontsize=FS)
-    ax1.set_title('Occupancy Histogram', fontsize=FS)
+    ax1.set_title('Occupancy Histogram', fontsize=FS, pad=12)
     ax1.tick_params(labelsize=FS)
     cbar1 = plt.colorbar(im1, ax=ax1, label='Seconds')
     cbar1.ax.yaxis.label.set_size(FS)
@@ -220,7 +220,7 @@ def make_figure(mouse_id, session_id, cluster,
     )
     ax2.set_xlabel('Head X', fontsize=FS)
     ax2.set_ylabel('Head Y', fontsize=FS)
-    ax2.set_title('Spike Count Histogram', fontsize=FS)
+    ax2.set_title('Spike Count Histogram', fontsize=FS, pad=12)
     ax2.tick_params(labelsize=FS)
     cbar2 = plt.colorbar(im2, ax=ax2, label='Spike Counts')
     cbar2.ax.yaxis.label.set_size(FS)
@@ -234,7 +234,7 @@ def make_figure(mouse_id, session_id, cluster,
     )
     ax3.set_xlabel('Head X', fontsize=FS)
     ax3.set_ylabel('Head Y', fontsize=FS)
-    ax3.set_title('Spike Rate Map', fontsize=FS)
+    ax3.set_title('Spike Rate Map', fontsize=FS, pad=12)
     ax3.tick_params(labelsize=FS)
     cbar3 = plt.colorbar(im3, ax=ax3, label='Spikes/Sec')
     cbar3.ax.yaxis.label.set_size(FS)
@@ -248,7 +248,7 @@ def make_figure(mouse_id, session_id, cluster,
     )
     ax4.set_xlabel('Head X', fontsize=FS)
     ax4.set_ylabel('Head Y', fontsize=FS)
-    ax4.set_title(f'Spike Rate Map (Upsampled {upsample_factor}x)', fontsize=FS)
+    ax4.set_title(f'Spike Rate Map (Upsampled {upsample_factor}x)', fontsize=FS, pad=12)
     ax4.tick_params(labelsize=FS)
     cbar4 = plt.colorbar(im4, ax=ax4, label='Spikes/Sec')
     cbar4.ax.yaxis.label.set_size(FS)
@@ -265,7 +265,7 @@ def make_figure(mouse_id, session_id, cluster,
                 label=f'3σ = {null_mean + 3 * null_std:.3f}')
     ax5.set_xlabel('Spatial Information (bits/spike)', fontsize=FS)
     ax5.set_ylabel('Frequency', fontsize=FS)
-    ax5.set_title(f'SSI Null Distribution\n(z={z_score:.2f}, p={p_value:.4f})', fontsize=FS)
+    ax5.set_title(f'SSI Null Distribution\n(z={z_score:.2f}, p={p_value:.4f})', fontsize=FS, pad=12)
     ax5.tick_params(labelsize=FS)
     ax5.legend(fontsize=FS)
 
@@ -279,7 +279,7 @@ def make_figure(mouse_id, session_id, cluster,
 
 def run_session_ssi(data, mouse_id, session_id,
                     n_permutations=1000,
-                    grid_shape=(9, 20),
+                    grid_shape=(5, 11),
                     min_occupancy_ms=1000,
                     upsample_factor=100,
                     plots_root='plots',

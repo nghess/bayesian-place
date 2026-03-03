@@ -253,7 +253,7 @@ if __name__ == '__main__':
     session_id  = 'm11'
     experiment  = 'clickbait-motivate'
     cluster_idx = 30       # index into data.clusters (not Kilosort ID)
-    n_steps     = 1000
+    n_steps     = 91000  # 273k steps → 1 step per 30ms
     # ------------------------------------------------------------------ #
 
     data = SessionData(
@@ -269,5 +269,6 @@ if __name__ == '__main__':
         data, cluster_idx,
         mouse_id=mouse_id,
         session_id=session_id,
+        grid_shape=(5, 11),
         n_steps=n_steps,
     )
